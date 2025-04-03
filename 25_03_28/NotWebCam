@@ -1,0 +1,22 @@
+import cv2
+import time
+import logging
+import configparser
+import numpy as np  # ✅ ROI 마스킹에 필요
+
+from LaneKeeping.lanekeeping import LaneKeeping
+from LaneDetection.detect import LaneDetection
+
+# ✅ GStreamer 파이프라인 함수 (JetRacer CSI 카메라용)
+def gstreamer_pipeline(
+    capture_width=1280,
+    capture_height=720,
+    display_width=640,
+    display_height=480,
+    framerate=30,
+    flip_method=0
+):
+    return (
+        f"nvarguscamerasrc ! video/x-raw(memory:NVMM), "
+        f"width=(int){capture_width}, height=(int){capture_height}, "
+        f"format=(string)NV12, framerate=(fraction
